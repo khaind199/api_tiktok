@@ -1,3 +1,4 @@
+from pydantic import BaseSettings
 from dotenv import load_dotenv
 import os
 
@@ -7,4 +8,6 @@ API_URL = os.getenv("TIKTOK_API_URL")
 DEVICE_ID = os.getenv("TIKTOK_DEVICE_ID")
 AID = os.getenv("TIKTOK_AID")
 LOCALE = os.getenv("TIKTOK_LOCALE")
-COOKIE = os.getenv("TIKTOK_COOKIE")
+TIKTOK_COOKIE = os.getenv("TIKTOK_COOKIE")
+
+SHOPEE_COOKIE = os.getenv("SHOPEE_COOKIE")
