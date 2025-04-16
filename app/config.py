@@ -1,4 +1,3 @@
-from pydantic import BaseSettings
 from dotenv import load_dotenv
 import os
 
@@ -11,3 +10,6 @@ LOCALE = os.getenv("TIKTOK_LOCALE")
 TIKTOK_COOKIE = os.getenv("TIKTOK_COOKIE")
 
 SHOPEE_COOKIE = os.getenv("SHOPEE_COOKIE")
+
+SOLD_TIKTOK_COOKIE = os.getenv("SOLD_TIKTOK_COOKIE")
+
