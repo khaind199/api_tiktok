@@ -406,3 +406,45 @@ def get_tiktok_recommend(data: RecommendTikTokRequest):
             "title": pagination_info.get("title", ""),
             
         }
+
+
+def get_product_info(item_id: int)-> dict:
+    url = f"https://affiliate.shopee.vn/api/v3/offer/product?item_id={item_id}"
+
+    global proxy_index
+
+    proxy = None
+    if PROXY_LIST:
+        proxy = PROXY_LIST[proxy_index % len(PROXY_LIST)]
+        proxy_index += 1
+
+    proxies = {"http": proxy, "https": proxy} if proxy else None
+
+    headers = {
+        "af-ac-enc-dat": "72b9b677d7ccc770",
+        "csrf-token": "WDT1MQ8a-wl1Tn2rqGdIWji32IbGytMmkj6Q",
+        "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+        "x-sap-ri": "16d20068f7bec074acb4df32030181e8b0db4e8fbe8fe431e7f6",
+        "x-sap-sec": "Alr+W8RwyzRbmzRblRRzmz5blRRbmz5bmzRxmzRbfz5bmY5xmzRwmzRbmCDOo5zbmzcpm5Rb7z2bmwKJOXWAxK0JDcOEucqqpf0lKDgD564Xqs+yQpKQ+O4y+d+U/6zTz1A4cRiRc8qMKZviTfZzvd8MqMkhFmKQAOox2KJxQHZes51Msi9EwSKzCQELNK1H8zhWhj441zz4cV0WTYSE8m+0Gq+PA1yNwotwMGn20aMVp1+BpH72MVwA9fPMcnTpzw0q1oxZX6lcAp5ToOJ2G4XTdwxpgJ3GGl/i7fVuPWh19UZPh0qnaYFjp4pth4AUvzeSsOAO79w8eNVPuH9PKtHq488wJEM5NG/V3bsxk4dPq2Z3L45PSuzVusQQqHEHg1ejc9Eaf4X22TiDg90a3RwiqPhMvmFKRRARm0N2Keqing3GpTEmSISaaW38/T9aJcAHXv7WnuKVDpLJ9FXBFV1DPp4HvZRbSbRu5T2h1fZ5RTzpMzV23SLMGmQacpKtyi76S/bKmhXgFi1dYBzcdQC8Fmi2tyVglifMbxM/hRUYZ82VudfPl+L1ukvqv7mKvBEgkW3tUmcNN3DWIi3I4z2uFD8Ulr8L7Fk/09uHyI1N1lh2nyNHG8gE3gfIBzFGcHTAO4MDLzEpD5Rgv1Ux3Bup/OygJwmpIEBjNcqBAOdbTicZbBcxU1eTJ354tGNAuSHhdsxKYYqEXpmUz/kyj0MnOkkdtMSWpxkWeGeqFyG/zvwlmnIbzHvDf7YDnHRROnmvkSUCDgXwqwKhHPRhii0Gk+bTgcwaD9j9nxdoIIx+i1zrvHb4YOinrCoUvwxCsUOGRz1QvvXySvBPjJSrdmLR+SxAczic9K5Lpb7zsUgmm7eJFo4y/76gYCJNgmfEYGLwFtokT26xQrV5auZ51+eNiE04nW5r/5CaZoapXh6WXYeaYKQj6xHqIujjr6mY68pIhFkDsyOWu8ORtuYjYwXlZu/JoLmdIEJJrmAqb4zZWhecId8nq/6ANph506IrtZyLUfQVA/vI0PC0jwbLxFDd0v7gp+XAzqQVNdMJxQ3L9jerdrN/vf+OuXYXKb5O6C9HjECKPhsYHG4hfmfFmZZw4nH9Zt4+6ZSK2lSIC8DeWxSIlFZ+wuNDS+NStHLRQWzzEf8CZARsAdKAKshcCtidI1UwJaIpZpyknkHeOLve4Z0mBYNoPDfydSCgYyaw2zx+M4r8BPgIukhW0DZ0X4VJgtAbjOsu1qtKG0M1QxrEgWSLirfRbvqi6d3eCrrfOW9FWzXHDzEfHUlEx0I4R3EDfXPwMWmcLcxbCWwiJnzAvIDwILNzmzRbCQj4wlo/ClHbmzRb4CnOo5zbmzRXmzRbfzRbmi6VOE26cqJk86ZGwi7wsJOEh47JzzRbmg6pv82ovM2hmzRbmzzbyzRzmz5bzzRbmzzbmzRXmzRbfzRbmyUmWijYwCkZG5NlAVImsYXnCikqzzRbmlSLvDrEC82hmzRbmC==",
+        "Cookie": "_gcl_au=1.1.1176551775.1744364046; SPC_SI=PbTrZwAAAABCQzBJYkRBad6pQAAAAAAATmY0WU01aUk=; SPC_F=tZu9sdHbwmsbh9O2wNnxVslqGgzFdWAH; REC_T_ID=1dd00a7e-16b8-11f0-9be7-0e32b3093b02; _fbp=fb.1.1744364047509.519812549399897091; SPC_CLIENTID=dFp1OXNkSGJ3bXNizvzzjkjpqtfbuyid; SPC_CDS_CHAT=189d31a9-29ae-46f5-9ddb-773bbc03ddce; _hjSessionUser_868286=eyJpZCI6IjRmYmU4Zjc3LTA5YjMtNWE4NS1hNGI3LTI2ZjhmOTI4MWE4MyIsImNyZWF0ZWQiOjE3NDQzNjUxODc3MjgsImV4aXN0aW5nIjp0cnVlfQ==; _gid=GA1.2.2024227111.1744679163; language=vi; _sapid=d3fdda1ebfd825796909e459ed92c5c92d0899dc5458f433c5a40ec6; _QPWSDCXHZQA=92fb8d98-ff6c-4deb-d7a4-cb6b163f0cb5; REC7iLP4Q=f40e7773-f950-4f4a-8066-61711607d890; _med=refer; _med=affiliates; SPC_ST=.TU42OHRtRHpvMjdUS2luZSn1HPwFb2MRAghGLsVhheUzYNJDKQY1Sfvay9/19PCAxn14nPSmDJjB9Z+WFXaUO8frWucQdaiI5fSCS4cReAYrsQA73tKRRzDieJTH/iTdsxv3ShsD2kXGVQPnv24gMlcLxLJ4AYxhMzVhUmrD/g6o5LvflnghySI9LsXoSkWMXLq1vaiu+bebid/8osh9d3wE9R43p5QpMkrUFzRs1hqrQSvyIKuF6ZRFSz94sNgv; SPC_U=173248446; SPC_R_T_ID=EpVVmVO/59MaVgp0fUrsN8cjPpSfy86yPU/QnIE/mFafWau0wUcqkOofqKU8GqZAzCipx6brovrxn61FNpOornu9WSL+mJcQgOTRSQi4G2/FZTWa4TTByCsYwNRBXH1QapyvaairDQmNeoDEt6ubPypfV78oyJf4QL+5J7li8W4=; SPC_R_T_IV=SzJCbHo4czFSYzFNaVRodA==; SPC_T_ID=EpVVmVO/59MaVgp0fUrsN8cjPpSfy86yPU/QnIE/mFafWau0wUcqkOofqKU8GqZAzCipx6brovrxn61FNpOornu9WSL+mJcQgOTRSQi4G2/FZTWa4TTByCsYwNRBXH1QapyvaairDQmNeoDEt6ubPypfV78oyJf4QL+5J7li8W4=; SPC_T_IV=SzJCbHo4czFSYzFNaVRodA==; _ga_FV78QC1144=GS1.1.1744871394.6.0.1744871394.60.0.0; 173248446_hasShowedPaymentFillingTip=1; SPC_SC_SESSION=gJrARohI/qGrrcC5rKJ6q5qoK8nNbKVtLKvuj1vz8Ey/ajcoF6cwMDJ60/jBKT3L/aUtnGJo1TN6Nv4NXv35b4ukX/aBBDTlJsUP/a6lpKnWxuJAKuXXaJ2zs45tBIuRbshS09Fn94fg8UUCP7AKW5Vek4yw+jyFfcTPk/hzTSJq4wbAtONW3VGOToxdiVw4gFY74trTzsVWDsDwxMdf6/Y7RxLlCOCJgYoxdN+DCyDJVeCwcupAutZ3fDlKlidAl_1_173248446; SPC_STK=LoM7nMU6Y5o82vXUoXXuYrkUi4UAPBbPUuAF7MjnIsvTh3KJiDyiM0MaQxQgQ3nVdYKwXPbCVf3LXtWMkdN7YCht/igxKXggYBY13cIhvCD5GLo34w0t5vyIc2uGzAE95yy63YiGEijYx5ZUYBYbMO40A6tR6cAwWm6D8AH8ak5nM5aDeTmDMn+jH9TxkFmLyXXRhG61Ks/p6nEjJHCaxXcDJxb2dBoLz6SQE3pwhh9qdsK4x16DOjYBBERyDhIB8WxVitRSk/gqL6VIms5hbMIqkxfxmdTlsuBbQHtzMWFyFdVxffn+H2akWDp4xOhvoT5DM+50i3XpUBZX2YfjXeiKbJJLcWjfi+khja11yhDkVq5ZVq00e6HlAA+x0UPToycqs6Gy6yURxlyDNONWsq56Rnje8cXpnPK4ytdehg/zgnwGifiKOVWPh8QtSFrN8S9ibMxdFFyV8TvJGIYIZA==; SC_DFP=cBXheEbELTUJqayhBVCIqhTSETXIaDGd; _ga_3XVGTY3603=GS1.1.1744876596.2.1.1744877594.60.0.0; _gcl_gs=2.1.k1$i1744881116$u121720009; _gcl_aw=GCL.1744881159.Cj0KCQjwzYLABhD4ARIsALySuCScI5FcxG_JS6dLy0244MD0RiYNV9UNNS9n15MJCmkUtTjCq78CLi4aAsYREALw_wcB; _gac_UA-61914164-6=1.1744881159.Cj0KCQjwzYLABhD4ARIsALySuCScI5FcxG_JS6dLy0244MD0RiYNV9UNNS9n15MJCmkUtTjCq78CLi4aAsYREALw_wcB; _dc_gtm_UA-61914164-6=1; SPC_EC=.ajJ6eXBRUWZvaWp1MUcxVus4e2Z+bhSp3gZqXtej+KH828Q9czLW4+fRbnVvCHpnj5pn3Qu94ZcNbt9wZjIddNZpOTsfvWiOaLHb2kFVrlGoF0lObzx1FaTbie4KAJ66cG+02MD0fkzSpOYROiOCnzAOiKlj+rlfzWkg5aQHes0juUjYjyXH8qVyje547gUbhqSCd2HbU6OQRgZuIi6/6uywTmPSJWHX57Yz6BRcpLFkYltDquOsKIIk8xP7s1Wr; AC_CERT_D=U2FsdGVkX1+IVZ/XLtmbwrP4+ScgDelEk1rBKLurWW2D+r8tWB76ZeMzT1acP8SXe2Grmhmm+b+5FMwYQL+LTEsym5v0h8tEJZKLN5JKUiqyDPFxb3xp3a/zwzOYDGpCYXlU9LOgvax/OfkIgSn65Qy9PXv3Tmsfnqnz4dOMskMXeTlP1qV6U2VktLVYhsSLolt9Rf2w/zfAZLFNtUGU0VplSbcisTJ24iKl2rfe70n85yL0H37pB/aYBApFV8tT0hHfq44cUPqYDTFpX0uBl37d0aEpV/OgTozqC0tglg2ehF/hqSJYlmqB1SJZS/9RZrqeZ81h+jpplzNxgajLk2MUGUHcrCSYdFrK+8ixawP52BIZ9tFWEIhACb6IhELqXUpa9rVGyf2Ag+BxITVs5CnDaWUQ/c+jX/9J2i5ImDxsdKdKDNJbnYhbPMmIF2uZHJvWg9qsr+SbNU50ERuQgYikjL1dCHM1pQkJXZDKvSC1y8odKjUiitXu9BddahUrWvX/NmT6r0791OVlLKVnW9PGgUwz0Ob8Wk6GyOZ84JWfdLUFIvPJfll2zimHifKaBt2eYF8K5Vojmkbq7x7SgOMA6GLYppCSC+vrWNLR9rLu0nPOQZMejX3gLxtkPV3gGwDWj52PRh7Z/kHmv1lj/V9OCUMGzaz4IPMLXCRcIcEGAiUy043nz2hwaKRNucMSehybcTkKABQbhfxneNXCj7LSMZoD4qy0tjzMh1Cgel6PVaeMwowc/bSKT4UldJkmyIfXQVHRTZFfpauMN+erTbS+3dHJ84wyvI2Op633YrRPiHJ2bcFjGSE90iR1ogfMDRXN5PY/ygflnzPH2lt3lTzUG4UMsMxRG+GBUogGUHrjTcASgba919HK410g+Uuk2baROi9CPypwGRwEAso9JunypZLDog0I9+ZBbH0Be29meHkjLwBcjIQpEvYFHKzHrCgQMGLnRiy0MD+/sGAT3RSopzPilNkxqhyZVlnwV2yVCaUfrY50w16beuhNo1ObSStpjeBGDY5ncJYTwF/5tPQudg5mEA5fdLqoLuw2QT+U2BVY/d4n3eW1LP3q9Fp6y6ubUmlmCmQmMgv+qoXillE0RcD7+6fg1lg6Cfzyqco=; _ga=GA1.1.1880851022.1744364049; _ga_4GPP1ZXG63=GS1.1.1744884211.17.1.1744884243.28.0.0; shopee_webUnique_ccd=aAaInJozlBQRZpyIY8DlLw%3D%3D%7ClbhNPnGusPuUe6cPmFxmbyYauA2dZHKfVRkJ9A%2BM%2FE8RuR57IL4KcXdmNDpjDJttgoiZXZPOmH46TKHGUpk%3D%7C7kd%2BoqHq8I%2FSpvfb%7C08%7C3; ds=b172421919a6c15151f6369b1f0281df",
+    }
+
+    response = requests.get(url, headers=headers, proxies=proxies, timeout=10)
+
+    response.raise_for_status()
+    res_json = response.json()
+
+    item = res_json.get("data", {}).get("batch_item_for_item_card_full", {})
+    if not item:
+        return {"error": "Không tìm thấy sản phẩm"}
+
+    return {
+        "item_id": int(item.get("itemid", 0)),
+        "shop_id": int(item.get("shopid", 0)),
+        "name": item.get("name", ""),
+        "time_ago": to_time_ago(item.get("ctime")) if item.get("ctime") else None,
+        "sold": int(item.get("sold", 0)),
+        "historical_sold": int(item.get("historical_sold", 0)),
+        "price": int(item.get("price", 0)),
+    }
