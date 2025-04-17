@@ -14,3 +14,12 @@ class ReviewShopeRequest(BaseModel):
     
 class SoldTikTokRequest(BaseModel):
     product_id: str
+    
+class ProductTikTokRequest(BaseModel):
+    next_scroll_param: int
+    
+class RecommendTikTokRequest(BaseModel):
+    product_id: str
+    cursor: int
+    author_id: str
+    seller_id: str
