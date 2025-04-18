@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Query
-from .models import ReviewTikTokRequest, ReviewShopeRequest, RecommendTikTokRequest
+from .models import ReviewTikTokRequest, RecommendTikTokRequest, SearchTikTokRequest
 from .services import get_tiktok_reviews, get_shopee_reviews, get_sold_tiktok, get_tiktok_search, get_tiktok_product, get_tiktok_recommend, get_product_info
 from fastapi.responses import JSONResponse
 
@@ -36,9 +36,9 @@ def fetch_reviews(
    
    
 @app.post("/tiktok_search")
-def get_reviews():
+def get_reviews(data: SearchTikTokRequest):
     try:
-        result = get_tiktok_search()
+        result = get_tiktok_search(data)
         return result
     except Exception as e:
         return {"error": str(e)}

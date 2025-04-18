@@ -1,12 +1,13 @@
 import requests
 import random
 from .config import API_URL, DEVICE_ID, AID, LOCALE, TIKTOK_COOKIE, SHOPEE_COOKIE, SOLD_TIKTOK_COOKIE
-from .models import ReviewTikTokRequest, ReviewShopeRequest, RecommendTikTokRequest
+from .models import ReviewTikTokRequest, RecommendTikTokRequest, SearchTikTokRequest
 from typing import Optional, List
 from datetime import datetime
 import time
 from bs4 import BeautifulSoup
 import json
+from urllib.parse import quote
 
 PROXY_LIST = [
     # "http://14.230.122.197:49372",
@@ -242,8 +243,20 @@ def get_sold_tiktok(product_id: int) -> dict:
     }
 
 
-def get_tiktok_search():
-    url = f"https://search16-normal-c-alisg.tiktokv.com/aweme/v1/search/item/?cursor=0&sort_type=2&enter_from=homepage_hot&publish_time=1&count=10&source=video_search&keyword=trend+xin+l%E1%BB%97i+qu%E1%BB%B3&query_correct_type=0&is_filter_search=1&search_source=tab_search&search_id&request_tag_from=h5&manifest_version_code=380701&_rticket=1744946062697&app_language=vi&app_type=normal&iid=7494480653326468872&app_package=com.zhiliaoapp.musically.go&channel=googleplay&device_type=SM-S9180&language=vi&host_abi=x86_64&locale=vi-VN&resolution=900*1600&openudid=beff4886f77cf3ae&update_version_code=380701&ac2=wifi5g&cdid=fbfd760c-144b-41de-b2e2-d0241e59d614&sys_region=VN&os_api=32&timezone_name=Asia%2FBangkok&dpi=320&carrier_region=VN&ac=wifi&device_id=6988945482875028994&os_version=12&timezone_offset=25200&version_code=380701&app_name=musically_go&ab_version=38.7.1&version_name=38.7.1&device_brand=samsung&op_region=VN&ssmix=a&device_platform=android&build_number=38.7.1&region=VN&aid=1340&ts=1744945946&ecom_version=350900&ecomAppVersion=35.9.0&ecom_version_code=350900&ecom_version_name=35.9.0&ecom_appid=614896&ecom_build_number=1.0.10-alpha.0&ecom_commit_id=af623b1cc&ecom_aar_version=1.0.10-alpha.0"
+def get_tiktok_search(data: SearchTikTokRequest):
+    random_did = random.randint(1241242141211411412, 7465151651135121111)
+    url = (
+        f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
+        f"?device_platform=android"
+        f"&channel=googleplay"
+        f"&aid=1180"
+        f"&app_name=trill"
+        f"&version_code=390505"
+        f"&device_type=SM-S9180"
+        f"&device_brand=samsung"
+        f"&os_version=12"
+        f"&device_id={random_did}"
+    )
 
     global proxy_index
     
@@ -253,23 +266,42 @@ def get_tiktok_search():
         proxy_index += 1 
 
     proxies = {"http": proxy, "https": proxy} if proxy else None
+    encoded_keyword = quote(data.keyword)
+
+    # payload = f"keyword={encoded_keyword}&offset={data.offset}&count={data.count}&source=video_search&search_source=tab_search&hot_search=0&search_id=&last_search_id=20250418042832CF41F560B11E1109652B&query_correct_type=1&is_filter_search=1&sort_type=3&publish_time=1&enter_from=homepage_hot&search_channel=&search_context=%7B%22query_list%22%3A%5B%7B%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%2C%22channel%22%3A%22tiktok_video%22%2C%22source%22%3A%22switch_tab%22%2C%22time%22%3A1744950514000%7D%2C%7B%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22search_id%22%3A%222025041804282820518B3F266B433F4BA9%22%2C%22channel%22%3A%22tiktok_general%22%2C%22source%22%3A%22search_history%22%2C%22time%22%3A1744950510010%7D%5D%2C%22search_scene_info%22%3A%5B%7B%22search_id%22%3A%222025041804282820518B3F266B433F4BA9%22%2C%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22channel%22%3A%22tiktok_general%22%2C%22source%22%3A%22search_history%22%2C%22timestamp%22%3A1744950510010%2C%22card_consumption%22%3A%7B%227488527882071969029%22%3A%7B%22search_result_id%22%3A%227488527882071969029%22%2C%22list_item_id%22%3A%227488527882071969029%22%2C%22outer_play_time%22%3A779%2C%22timestamp%22%3A1744950513890%2C%22act%22%3A%5B%5D%7D%7D%7D%2C%7B%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%2C%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22channel%22%3A%22tiktok_video%22%2C%22source%22%3A%22switch_tab%22%2C%22timestamp%22%3A1744950514000%2C%22card_consumption%22%3A%7B%227490109429178715447%22%3A%7B%22search_result_id%22%3A%227490109429178715447%22%2C%22list_item_id%22%3A%227490109429178715447%22%2C%22outer_play_time%22%3A1099%2C%22timestamp%22%3A1744950517129%2C%22act%22%3A%5B%5D%7D%7D%7D%5D%2C%22feed_scene_info%22%3A%5B%5D%7D&personal_context_info=%7B%22last_feed_context%22%3A%7B%22last_feed_group_id%22%3A%227486110707201690898%22%2C%22last_feed_like_status%22%3Afalse%2C%22last_feed_click_comment%22%3Afalse%2C%22last_feed_click_forward%22%3Afalse%2C%22last_feed_favorite_status%22%3Afalse%2C%22entry_search_source%22%3A%22search_history%22%7D%7D&translate_language_code=vi&disable_translate_language_code=&sug_generate_type=0&search_session_id=7801896491345901308&multi_virtual_rs=1&end_to_end_search_session_id=6636677090606951490&bcm_chain=%7B%22chain%22%3A%5B%7B%22btm%22%3A%22a2270.b5547.c0.d0%22%2C%22btm_show_id%22%3A%22c8ddddcf-50e1-43ca-a7e5-f40afa821bfc%231%22%2C%22content%22%3A%7B%22page%22%3A%7B%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%7D%7D%2C%22jump_with_token%22%3A%220%22%7D%2C%7B%22btm%22%3A%22a2270.b9734.c0.d0%22%2C%22btm_show_id%22%3A%2292001d56-2db7-4813-8b13-52dffa83fd73%232%22%2C%22content%22%3A%7B%7D%2C%22jump_with_token%22%3A%220%22%7D%2C%7B%22btm%22%3A%22a2270.b2001.c0.d0%22%2C%22btm_show_id%22%3A%227bcac44a-fc60-4086-a854-8cae206d5909%231%22%2C%22content%22%3A%7B%7D%2C%22jump_with_token%22%3A%220%22%2C%22first_page%22%3Atrue%7D%5D%2C%22bcm_chain_debug%22%3A%7B%22setting_version%22%3A%220%22%2C%22bcm_gecko_version%22%3A%22%22%2C%22chain_abnormal_detail%22%3A%7B%22chain_from%22%3A%22top_page%22%2C%22finder%22%3A%22PageFinder%28%29%22%2C%22last_btm_id_switch%22%3A-1%7D%7D%7D"
+    payload = (
+        f"keyword={encoded_keyword}"
+        f"&offset={data.offset}"
+        f"&count={data.count}"
+        f"&source=video_search"
+        f"&search_source=tab_search"
+        f"&hot_search=0"
+        f"&search_id="
+        f"&last_search_id=20250418042832CF41F560B11E1109652B"
+        f"&query_correct_type=1"
+        f"&is_filter_search=1"
+        f"&sort_type=3"
+        f"&publish_time=1"
+        f"&enter_from=homepage_hot"
+        f"&translate_language_code=vi"
+        f"&search_session_id=7801896491345901308"
+        f"&end_to_end_search_session_id=6636677090606951490"
+    )
 
     headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Cookie': 'store-idc=alisg; store-country-code=vn; install_id=7494480653326468872; ttreq=1$2319f04b0bf4818e5c6776ff06c75cc8c4ae17e9; passport_csrf_token=308295db06422913d776775444d4d032; passport_csrf_token_default=308295db06422913d776775444d4d032; odin_tt=a0767c0932c2154a22a0c0352f629f20c1034fd2361b13cb959ea64ae768c3d69162cd60db1d335b0a16f323235444c15cdffde39132ef75d06569fa68079efe82d27fc0868f56ddea5689ec6a583350; cmpl_token=AgQQAPOFF-ROXY_7pu6oId0_-pwh0JLJf4AOYNhbtQ; d_ticket=27699425b9d7eac7e8c22b1987a0d01e63270; sid_guard=0a4d0ba97d1261d9a4b1776a12a31630%7C1744946024%7C15552000%7CWed%2C+15-Oct-2025+03%3A13%3A44+GMT; uid_tt=76610d6a56befca8d187e9b61df0eb35204563bdf407d5a0bba812544cfeb927; uid_tt_ss=76610d6a56befca8d187e9b61df0eb35204563bdf407d5a0bba812544cfeb927; sid_tt=0a4d0ba97d1261d9a4b1776a12a31630; sessionid=0a4d0ba97d1261d9a4b1776a12a31630; sessionid_ss=0a4d0ba97d1261d9a4b1776a12a31630; store-country-code-src=uid; tt-target-idc=alisg; tt-target-idc-sign=c5mCtJn3GrwpXtL7H1bNgjnJvnJYM5d2gxpxjN7fmvb6FSlNq_JXTrk-EngIV3qhru02YPhBqHGMHahq1RemiP8YeJ5x3_V_d3xtU5rxRg7FCvxvyIns_NaM2bV1IszUotMfX582J3wFNub9qpgNsMmFBUixWHsH9ONCuVDQHoXDKOqD_9_yyWN_B8-a-_Q8O5WKvJCix68LQAkuKgvJ0nH5S5jNXcAOXuLgV_Svj0HEJUWQ4qUoAZpHWfuYtpSlNBIw6FcAeIf-lt-Ok049uuxJdOVx6UcoQ7OJ4yd1p3ZS0D-Wi3rNxNNBokCCkp5DNMLNpBHOqcCqlGVKQiW9eTiGlZ2qVfCLxcSJ0jJjRnrnfIgdl9TTjbjZ2wGjWlT5Mpk3a_-IPQlMlVq5d9230m8KvE_Qyfo3fJzUZDgP0v7_m4XLPD5hPMQ7PXBsANF81ND3PyQm5-FKcMc12yj91zvxGonZNlYx8XoDrwexSa2o8hycM-xgRSnyUAcl0jz7; store-country-sign=MEIEDKtxyj_R2gKT6sLZRwQgYzWbw1eAL3k5Te7msEvLygEKR-NKMjDEYNz6_M8qvUEEEHeqUpjbrC4_XiQSpdM8og4; odin_tt=378ff5388b6314b2193d1a864137b3a8acf42f6c83f4ddbab572c15935ab52da1663da899a3c5def73f6402838f1c90a02afb5016a5970ee6f416919db71285e34c9be7d81d5ba08c6f1de8e772144e2',
-        'User-Agent': 'com.zhiliaoapp.musically.go/380701 (Linux; U; Android 12; vi_VN; SM-S9180; Build/PQ3B.190801.10101846;tt-ok/3.12.13.34-ul)',
-        'X-Argus': 'fpSJE7YVxwvaD4qB2oIFjZ97QpsjYaFblgbnXtuMo9G0XteqCSwvj3vUrWPK2wbeUYUHBXFC+npzREFfipaXxfUguO8faD4HFAx/2GT/BO1n7gvd68S7d6k9UBWZ3IkR3jy+o3VNmSvtawiUL7ih31kX7mWeMFPs76dk/PV/26AsBn7bYRixxlKuw1NSJnhBgqA6VTASeRt3YMAD9M7WEJAWSrFL72z7NJXyIPYOjzGuL/XOD7tUeOlOr8IpyiaGQEP73a694pgrG6NJA4PLVnq25G8fCYhja1/HxzXwHk6IyMXvzCp5exh0fbtRw0Qfu6/MFDoVzaMunpvmvBKOv3P27ZIvZ2wfRe6r78YyeZydwKlC/i9Fkx4yEX5lKmc7Mf3wSS0uGriy2f+lThIfArFCXBJI1ieayA3YCYqbEJLzsKG6Pf325SnJeTtW9Pq3R/yAZtK+e/EsK0RCtrCh99cCztGObUak7aMIG5UXlwW1Rqu8ZX9neMP5NP+qCHZRjxfsa9Akv601gCKzoK0K6nelTF7kFD8SRSqXOPF5NaPayunB5pA/qnngmzcnZ4hW/z2ITZscxz4j3qexJwjil4ei44L/r9TKOoUOWTCVAbhAag==',
-        'X-Ladon': 'JzGIFjW4SkKVI8VdhvpX0ZjkCzcH+7wD43DdyhMlAlRKJasb'
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Cookie': 'odin_tt=f6529ee9570dba5d17b0e9740d51a4e610577b84720580aac76aa24cbf507f0f168b5a04f4671616806d9b34347786d83125ec49b2ae7d8a3ba6b818a9add3b7d063778b6d0817032504eeb763436734;msToken=4QvzbIcdTAxf5TrOEFOAL_B0XV-ktq3WEyVd1Z2_a3Lw_JvEXSW1Fb8PovrJd2XHE6Ifeb_SSJdSlMdqwfDqCyyleqyR7V8bCl63Tsf7TKY=;install_id=7494494848495503122;ttreq=1$a8fa699e4b4a88449fe1708182f02cc4ddb2f95e; odin_tt=378ff5388b6314b2193d1a864137b3a8acf42f6c83f4ddbab572c15935ab52da1663da899a3c5def73f6402838f1c90a02afb5016a5970ee6f416919db71285e34c9be7d81d5ba08c6f1de8e772144e2',
+        'User-Agent': 'com.ss.android.ugc.trill/390505 (Linux;U;Android 12;vi_VN;SM-S9180;Build/PQ3B.190801.10101846;tt-ok/3.12.13.17)',
+        'X-Ladon': 'vKomCyelHEks8b1U+k+hHQ56/CuxGml2s+3AccYGurBUN3+9'
     }
-
-    response = requests.get(url, headers=headers, proxies=proxies, timeout=10)
+    full_url = f"{url}&{payload}"
+    response = requests.get(full_url, headers=headers, proxies=proxies, timeout=10)
     response.raise_for_status()
     res_json = response.json()
-    
+    # return res_json
     list_aweme_ids  = []
-    for item in res_json.get("aweme_list", []):
-        aweme_info = item.get("added_sound_music_info",{})
-        id = aweme_info.get("id", "")
+    for item in res_json.get("aweme_list", [{}]):
+        id = item.get("aweme_id", "")
         if id is not None:
             list_aweme_ids.append(id)
 
