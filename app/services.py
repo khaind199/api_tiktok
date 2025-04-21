@@ -371,7 +371,7 @@ def get_tiktok_product():
         }
     
 def get_tiktok_recommend(data: RecommendTikTokRequest):
-    url = f"https://oec22-normal-alisg.tiktokv.com/api/v1/shop/recommend/same_shop/get?iid=7493820152778852151&device_id=7493023054664418871&ac=wifi&channel=googleplay&aid=1233&app_name=musical_ly&version_code=280605&version_name=28.6.5&device_platform=android&ab_version=28.6.5&ssmix=a&device_type=SM-J730G&device_brand=samsung&language=en&os_api=28&os_version=9&openudid=3d4dc3e77ddcc9fb&manifest_version_code=2022806050&resolution=1080*1920&dpi=420&update_version_code=2022806050&_rticket=1744855420835&current_region=VN&app_type=normal&sys_region=US&mcc_mnc=45202&timezone_name=Asia%2FHo_Chi_Minh&carrier_region_v2=452&residence=VN&app_language=en&carrier_region=VN&ac2=wifi&uoo=0&op_region=VN&timezone_offset=25200&build_number=28.6.5&host_abi=armeabi-v7a&locale=en&region=US&ts=1744855419&cdid=a65772cf-f4d7-4ef0-9406-a27665c468d9"
+    url = f"https://oec22-normal-alisg.tiktokv.com/api/v1/shop/recommend/same_shop/get?device_platform=android&os=android&ssmix=a&_rticket=1745198296042&cdid=2af2be00-385e-43eb-af4c-33edf0729808&channel=googleplay&aid=1180&app_name=trill&version_code=390505&version_name=39.5.5&manifest_version_code=390505&update_version_code=390505&ab_version=39.5.5&resolution=900*1600&dpi=320&device_type=SM-S9180&device_brand=samsung&language=vi&os_api=32&os_version=12&ac=wifi&is_pad=0&current_region=VN&app_type=normal&sys_region=VN&last_install_time=1744964235&mcc_mnc=45204&timezone_name=Asia%2FBangkok&carrier_region_v2=452&residence=VN&app_language=vi&carrier_region=VN&timezone_offset=25200&host_abi=arm64-v8a&locale=vi-VN&ac2=wifi5g&uoo=0&op_region=VN&build_number=39.5.5&region=VN&ts=1745198296&iid=7494564208987899655&device_id=6931281686899869190&openudid=0ff8197ac1f2878b"
 
     global proxy_index
     
@@ -394,12 +394,16 @@ def get_tiktok_recommend(data: RecommendTikTokRequest):
         "scene": "pdp_shop_recommend",
         "size": 6,
         "cursor": data.cursor,
-        "first_source_page": "mall",
         "enter_from_info": "mall",
         "author_id": data.author_id,
         "seller_id": data.seller_id,
-        "product_source_info": 6,
-        "traffic_source_list": [6]
+        "product_source_info": 3,
+        "traffic_source_list": [3],
+        "session_refresh_index":1,
+        "experiment":{
+            "params_map":{"pdp_shop_entry":"0"}
+            },
+        "first_source_page":"show_window"
     })
 
     response = requests.post(url, headers=headers, data=payload, proxies=proxies, timeout=10)
