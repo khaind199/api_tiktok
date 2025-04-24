@@ -245,18 +245,33 @@ def get_sold_tiktok(product_id: int) -> dict:
 
 def get_tiktok_search(data: SearchTikTokRequest):
     random_did = random.randint(1241242141211411412, 7465151651135121111)
-    url = (
-        f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
-        f"?device_platform=android"
-        f"&channel=googleplay"
-        f"&aid=1180"
-        f"&app_name=trill"
-        f"&version_code=390505"
-        f"&device_type=SM-S9180"
-        f"&device_brand=samsung"
-        f"&os_version=12"
-        f"&device_id={random_did}"
-    )
+    # url = (
+    #     f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
+    #     f"?device_platform=android"
+    #     f"&channel=googleplay"
+    #     f"&aid=1180"
+    #     f"&app_name=trill"
+    #     f"&version_code=390505"
+    #     f"&device_type=SM-S9180"
+    #     f"&device_brand=samsung"
+    #     f"&os_version=12"
+    #     f"&device_id={random_did}"
+    # )
+    url = ( 
+            f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
+            f"?device_platform=android"
+            f"&channel=googleplay"
+            f"&aid=1180"
+            f"&app_name=trill"
+            f"&version_code=390505"
+            f"&device_type=SM-S9180"
+            f"&device_brand=samsung"
+            f"&os_version=12"
+            f"&sys_region=VN"
+            f"&app_language=vi"
+            f"&carrier_region=VN"
+            f"&device_id={random_did}"
+        )
 
     global proxy_index
     
@@ -371,6 +386,7 @@ def get_tiktok_product():
         }
     
 def get_tiktok_recommend(data: RecommendTikTokRequest):
+    
     url = f"https://oec22-normal-alisg.tiktokv.com/api/v1/shop/recommend/same_shop/get?device_platform=android&os=android&ssmix=a&_rticket=1745198296042&cdid=2af2be00-385e-43eb-af4c-33edf0729808&channel=googleplay&aid=1180&app_name=trill&version_code=390505&version_name=39.5.5&manifest_version_code=390505&update_version_code=390505&ab_version=39.5.5&resolution=900*1600&dpi=320&device_type=SM-S9180&device_brand=samsung&language=vi&os_api=32&os_version=12&ac=wifi&is_pad=0&current_region=VN&app_type=normal&sys_region=VN&last_install_time=1744964235&mcc_mnc=45204&timezone_name=Asia%2FBangkok&carrier_region_v2=452&residence=VN&app_language=vi&carrier_region=VN&timezone_offset=25200&host_abi=arm64-v8a&locale=vi-VN&ac2=wifi5g&uoo=0&op_region=VN&build_number=39.5.5&region=VN&ts=1745198296&iid=7494564208987899655&device_id=6931281686899869190&openudid=0ff8197ac1f2878b"
 
     global proxy_index

@@ -51,7 +51,7 @@ def get_reviews():
     except Exception as e:
         return {"error": str(e)}
     
-@app.post("/recommend")
+@app.post("/tiktok/recommend")
 def get_reviews(data: RecommendTikTokRequest):
     try:
         result = get_tiktok_recommend(data)
