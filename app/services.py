@@ -242,39 +242,24 @@ def get_sold_tiktok(product_id: int) -> dict:
         
     }
 
-
 def get_tiktok_search(data: SearchTikTokRequest):
-    random_did = random.randint(1241242141211411412, 7465151651135121111)
-    # url = (
-    #     f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
-    #     f"?device_platform=android"
-    #     f"&channel=googleplay"
-    #     f"&aid=1180"
-    #     f"&app_name=trill"
-    #     f"&version_code=390505"
-    #     f"&device_type=SM-S9180"
-    #     f"&device_brand=samsung"
-    #     f"&os_version=12"
-    #     f"&device_id={random_did}"
-    # )
-    url = ( 
-            f"https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
-            f"?device_platform=android"
-            f"&channel=googleplay"
-            f"&aid=1180"
-            f"&app_name=trill"
-            f"&version_code=390505"
-            f"&device_type=SM-S9180"
-            f"&device_brand=samsung"
-            f"&os_version=12"
-            f"&sys_region=VN"
-            f"&app_language=vi"
-            f"&carrier_region=VN"
-            f"&device_id={random_did}"
-        )
-
     global proxy_index
-    
+
+    random_did = random.randint(1241242141211411412, 7465151651135121111)
+
+    url = (
+        "https://search22-normal-c-alisg.tiktokv.com/aweme/v1/search/item/"
+        f"?device_platform=android"
+        f"&channel=googleplay"
+        f"&aid=1180"
+        f"&app_name=trill"
+        f"&version_code=390505"
+        f"&device_type=SM-N976N"
+        f"&device_brand=samsung"
+        f"&os_version=12"
+        f"&device_id={random_did}"
+    )
+
     proxy = None
     if PROXY_LIST:
         proxy = PROXY_LIST[proxy_index % len(PROXY_LIST)]
@@ -283,49 +268,41 @@ def get_tiktok_search(data: SearchTikTokRequest):
     proxies = {"http": proxy, "https": proxy} if proxy else None
     encoded_keyword = quote(data.keyword)
 
-    # payload = f"keyword={encoded_keyword}&offset={data.offset}&count={data.count}&source=video_search&search_source=tab_search&hot_search=0&search_id=&last_search_id=20250418042832CF41F560B11E1109652B&query_correct_type=1&is_filter_search=1&sort_type=3&publish_time=1&enter_from=homepage_hot&search_channel=&search_context=%7B%22query_list%22%3A%5B%7B%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%2C%22channel%22%3A%22tiktok_video%22%2C%22source%22%3A%22switch_tab%22%2C%22time%22%3A1744950514000%7D%2C%7B%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22search_id%22%3A%222025041804282820518B3F266B433F4BA9%22%2C%22channel%22%3A%22tiktok_general%22%2C%22source%22%3A%22search_history%22%2C%22time%22%3A1744950510010%7D%5D%2C%22search_scene_info%22%3A%5B%7B%22search_id%22%3A%222025041804282820518B3F266B433F4BA9%22%2C%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22channel%22%3A%22tiktok_general%22%2C%22source%22%3A%22search_history%22%2C%22timestamp%22%3A1744950510010%2C%22card_consumption%22%3A%7B%227488527882071969029%22%3A%7B%22search_result_id%22%3A%227488527882071969029%22%2C%22list_item_id%22%3A%227488527882071969029%22%2C%22outer_play_time%22%3A779%2C%22timestamp%22%3A1744950513890%2C%22act%22%3A%5B%5D%7D%7D%7D%2C%7B%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%2C%22query%22%3A%22tren+m%E1%BB%9Bi+tr%C3%AAn+tiktok%22%2C%22channel%22%3A%22tiktok_video%22%2C%22source%22%3A%22switch_tab%22%2C%22timestamp%22%3A1744950514000%2C%22card_consumption%22%3A%7B%227490109429178715447%22%3A%7B%22search_result_id%22%3A%227490109429178715447%22%2C%22list_item_id%22%3A%227490109429178715447%22%2C%22outer_play_time%22%3A1099%2C%22timestamp%22%3A1744950517129%2C%22act%22%3A%5B%5D%7D%7D%7D%5D%2C%22feed_scene_info%22%3A%5B%5D%7D&personal_context_info=%7B%22last_feed_context%22%3A%7B%22last_feed_group_id%22%3A%227486110707201690898%22%2C%22last_feed_like_status%22%3Afalse%2C%22last_feed_click_comment%22%3Afalse%2C%22last_feed_click_forward%22%3Afalse%2C%22last_feed_favorite_status%22%3Afalse%2C%22entry_search_source%22%3A%22search_history%22%7D%7D&translate_language_code=vi&disable_translate_language_code=&sug_generate_type=0&search_session_id=7801896491345901308&multi_virtual_rs=1&end_to_end_search_session_id=6636677090606951490&bcm_chain=%7B%22chain%22%3A%5B%7B%22btm%22%3A%22a2270.b5547.c0.d0%22%2C%22btm_show_id%22%3A%22c8ddddcf-50e1-43ca-a7e5-f40afa821bfc%231%22%2C%22content%22%3A%7B%22page%22%3A%7B%22search_id%22%3A%2220250418042832CF41F560B11E1109652B%22%7D%7D%2C%22jump_with_token%22%3A%220%22%7D%2C%7B%22btm%22%3A%22a2270.b9734.c0.d0%22%2C%22btm_show_id%22%3A%2292001d56-2db7-4813-8b13-52dffa83fd73%232%22%2C%22content%22%3A%7B%7D%2C%22jump_with_token%22%3A%220%22%7D%2C%7B%22btm%22%3A%22a2270.b2001.c0.d0%22%2C%22btm_show_id%22%3A%227bcac44a-fc60-4086-a854-8cae206d5909%231%22%2C%22content%22%3A%7B%7D%2C%22jump_with_token%22%3A%220%22%2C%22first_page%22%3Atrue%7D%5D%2C%22bcm_chain_debug%22%3A%7B%22setting_version%22%3A%220%22%2C%22bcm_gecko_version%22%3A%22%22%2C%22chain_abnormal_detail%22%3A%7B%22chain_from%22%3A%22top_page%22%2C%22finder%22%3A%22PageFinder%28%29%22%2C%22last_btm_id_switch%22%3A-1%7D%7D%7D"
     payload = (
         f"keyword={encoded_keyword}"
         f"&offset={data.offset}"
         f"&count={data.count}"
         f"&source=video_search"
-        f"&search_source=tab_search"
-        f"&hot_search=0"
-        f"&search_id="
-        f"&last_search_id=20250418042832CF41F560B11E1109652B"
         f"&query_correct_type=1"
         f"&is_filter_search=1"
         f"&sort_type=3"
-        f"&publish_time=1"
-        f"&enter_from=homepage_hot"
-        f"&translate_language_code=vi"
-        f"&search_session_id=7801896491345901308"
-        f"&end_to_end_search_session_id=6636677090606951490"
     )
 
     headers = {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'Cookie': 'odin_tt=f6529ee9570dba5d17b0e9740d51a4e610577b84720580aac76aa24cbf507f0f168b5a04f4671616806d9b34347786d83125ec49b2ae7d8a3ba6b818a9add3b7d063778b6d0817032504eeb763436734;msToken=4QvzbIcdTAxf5TrOEFOAL_B0XV-ktq3WEyVd1Z2_a3Lw_JvEXSW1Fb8PovrJd2XHE6Ifeb_SSJdSlMdqwfDqCyyleqyR7V8bCl63Tsf7TKY=;install_id=7494494848495503122;ttreq=1$a8fa699e4b4a88449fe1708182f02cc4ddb2f95e; odin_tt=378ff5388b6314b2193d1a864137b3a8acf42f6c83f4ddbab572c15935ab52da1663da899a3c5def73f6402838f1c90a02afb5016a5970ee6f416919db71285e34c9be7d81d5ba08c6f1de8e772144e2',
-        'User-Agent': 'com.ss.android.ugc.trill/390505 (Linux;U;Android 12;vi_VN;SM-S9180;Build/PQ3B.190801.10101846;tt-ok/3.12.13.17)',
-        'X-Ladon': 'vKomCyelHEks8b1U+k+hHQ56/CuxGml2s+3AccYGurBUN3+9'
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Cookie': 'install_id=7495601926983091989; ttreq=1$67956dd627f467ba7da5628ee610d91d3f5c0c4a; odin_tt=142852b59cb99122e16b294481b0c2409e1a2950ef0805ac84ca2659d42ce68be947f2a0667101ea0699f1d646667c47439dcad1b9141c42c74bffa2e7084b16563bfa79392313131d380efa2f81b6a4; store-idc=alisg; store-country-sign=MEIEDMEKk3457CFs-VDpggQg46Yup5ACIzPYnSz9zKhfP9CnQgLVSthii7aXMagh2hoEEEqCnaJ9V4NtDTd2y7LKnPw; store-country-code=kr; store-country-code-src=did; odin_tt=c97fd3f6f83affd582dba1966c4edca011b6686083ab86123f7cef8738687807d6a785a71b76c4544d522a0e812f68891da82d6500634f41bfdb512195f9dacced1ceb7033b1090853d8054023688ebf',
+        'User-Agent': 'com.ss.android.ugc.trill/390505 (Linux; U; Android 12; vi_VN; SM-N976N; Build/QP1A.190711.020;tt-ok/3.12.13.17)',
+        'X-Ladon': 'RBPmb/3okOKaOTb09WdBjd3zbHHbwKAd+WvWDNaI2dJK87VE'
     }
-    full_url = f"{url}&{payload}"
-    response = requests.get(full_url, headers=headers, proxies=proxies, timeout=10)
-    response.raise_for_status()
-    res_json = response.json()
-    # return res_json
-    list_aweme_ids  = []
-    for item in res_json.get("aweme_list", [{}]):
-        id = item.get("aweme_id", "")
-        if id is not None:
-            list_aweme_ids.append(id)
+
+    try:
+        response = requests.post(url, headers=headers, data=payload, proxies=proxies, timeout=10)
+        response.raise_for_status()
+        res_json = response.json()
+    except Exception as e:
+        return {"error": str(e)}
+
+    list_aweme_ids = [
+        item.get("aweme_id", "")
+        for item in res_json.get("aweme_list", [])
+        if item.get("aweme_id")
+    ]
 
     return {
-        "list_aweme_info_id": list_aweme_ids ,
+        "list_aweme_info_id": list_aweme_ids,
         "has_more": res_json.get("has_more", ""),
         "cursor": res_json.get("cursor", 0),
     }
-
 
 def get_tiktok_product():
     url = f"https://oec22-normal-alisg.tiktokv.com/api/showcase/v1/profile_tab_product/list?iid=7493053746571724599&device_id=7493023054664418871&ac=wifi&channel=googleplay&aid=1233&app_name=musical_ly&version_code=280605&version_name=28.6.5&device_platform=android&ab_version=28.6.5&ssmix=a&device_type=SM-J730G&device_brand=samsung&language=en&os_api=28&os_version=9&openudid=3d4dc3e77ddcc9fb&manifest_version_code=2022806050&resolution=1080*1920&dpi=420&update_version_code=2022806050&_rticket=1744766425632&current_region=VN&app_type=normal&sys_region=US&mcc_mnc=45202&timezone_name=Asia%2FHo_Chi_Minh&carrier_region_v2=452&residence=VN&app_language=en&carrier_region=VN&ac2=wifi&uoo=0&op_region=VN&timezone_offset=25200&build_number=28.6.5&host_abi=armeabi-v7a&locale=en&region=US&ts=1744766426&cdid=e928b21d-15c8-458a-a5f1-8d93b0bc545d"
